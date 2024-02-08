@@ -1,5 +1,7 @@
 <img src="logo.png" alt="drawing" width="200"/>
 
+[![Linting](https://github.com/Flor91/boilerplate-python-project/actions/workflows/lint.yml/badge.svg)](https://github.com/Flor91/boilerplate-python-project/actions/workflows/lint.yml)
+
 # Python Project Template
 > List of tools and configurations I like to use to start a new Python project
 
