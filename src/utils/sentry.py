@@ -1,8 +1,9 @@
 from typing import Any
+
 import sentry_sdk
 from structlog import get_logger
-from app.config import config
 
+from app.config import config
 
 logger = get_logger(__name__)
 

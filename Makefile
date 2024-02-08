@@ -11,38 +11,27 @@ install:
 	@echo "Installing dependencies..."
 	poetry install --no-root --remove-untracked
 
-# Run all checks (test, lint, typecheck)
-ci: typecheck lint test
-.PHONY: ci
+# Makefile
+format-black:
+	@black .
 
-# Run tests
-test:
-	poetry run pytest .
-.PHONY: test
+format-isort:
+	@isort .
 
-# Run linting
-lint:
-	poetry run black --check .
-	poetry run isort -c .
-	poetry run flake8 .
-	poetry run pydocstyle .
-.PHONY: lint
+lint-black:
+	@black . --check
 
-# Run autoformatters
-lint-fix:
-	poetry run black .
-	poetry run isort .
-.PHONY: lint-fix
+lint-isort:
+	@isort . --check
 
-# Run typechecking
-typecheck:
-	poetry run mypy --show-error-codes --pretty .
-.PHONY: typecheck
+lint-flake8:
+	@flake8 .
 
-# Define default goal and provide help message
-.DEFAULT_GOAL := help
-help: Makefile
-	@echo "Usage: make [target]"
-	@echo ""
-	@echo "Targets:"
-	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "    \033[32m%-20s\033[0m %s\n", $$1, $$2}'
+lint-mypy:
+	@mypy ./src
+
+lint-mypy-report:
+	@mypy ./src --html-report ./mypy_html
+
+format: format-black format-isort
+lint: lint-black lint-isort lint-flake8 lint-mypy
