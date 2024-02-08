@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "boilerplate-project"
+version = "0.1.0"
+description = ""
+authors = ["Florencia Silvestre"]
+readme = "README.md"
+homepage = "https://github.com/Flor91/boilerplate-python-project"
+repository = "https://github.com/Flor91/boilerplate-python-project"
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+
+
+[tool.poetry.group.dev.dependencies]
+coloredlogs = "^15.0.1"
+black = "^24.1.1"
+flake8 = "^7.0.0"
+pre-commit = "^3.6.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
