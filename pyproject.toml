@@ -2,11 +2,12 @@
 name = "app"
 version = "0.1.0"
 description = ""
-authors = ["Florencia Silvestre"]
+authors = ["Florencia Silvestre <florsilvestre91@gmail.com>"]
 readme = "README.md"
-homepage = "https://github.com/Flor91/boilerplate-python-project"
-repository = "https://github.com/Flor91/boilerplate-python-project"
+homepage = "https://github.com/Flor91/boilerplate_python_project"
+repository = "https://github.com/Flor91/boilerplate_python_project"
 license = "MIT"
+
 
 [tool.poetry.dependencies]
 python = "^3.12"
@@ -14,23 +15,26 @@ httpx = "^0.26.0"
 fastapi = "^0.109.2"
 uvicorn = {extras = ["standard"], version = "^0.27.0.post1"}
 
-[tool.poetry.group.dev.dependencies]
-coloredlogs = "^15.0.1"
+[tool.poetry.group.lint.dependencies]
+isort = "^5.13.2"
 black = "^24.1.1"
 flake8 = "^7.0.0"
-pre-commit = "^3.6.0"
-isort = "^5.13.2"
 mypy = "^1.8.0"
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.docs.dependencies]
+mkdocs = "^1.5.3"
+mkdocs-material = "^9.5.8"
+mkdocstrings = "^0.24.0"
+mkdocs-render-swagger-plugin = "^0.1.1"
+
+
+[tool.poetry.group.semver.dependencies]
+python-semantic-release = "^9.0.3"
+
 
 [tool.isort]
 profile = "black"
-
-[tool.black]
-line-length = 88
 
 [tool.mypy]
 # 3rd party import
@@ -56,3 +60,28 @@ warn_return_any = false
 warn_unreachable = true
 # Misc
 pretty = true
+
+[tool.pytest.ini_options]
+testpaths = ["src", "tests"]
+addopts = "-p no:cacheprovider" # deactivating pytest caching.
+
+[tool.coverage.report]
+exclude_lines = [
+    'if __name__ == "__main__":'
+]
+
+[tool.semantic_release]
+branch = "main"
+version_variable = "src/boiler_app/__init__.py:__version__"
+version_toml = "pyproject.toml:tool.poetry.version"
+version_source = "tag"
+commit_version_number = true # required for version_source = "tag"
+commit_message = "{version} [skip ci]" # skip triggering ci pipelines for version commits
+tag_commit = true
+upload_to_pypi = false
+upload_to_release = false
+hvcs = "github" # gitlab is also supported (hvcs = host version control system)
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

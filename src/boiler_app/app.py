@@ -3,13 +3,25 @@ import uvicorn
 from fastapi import FastAPI, HTTPException, Path, status
 from httpx import Response
 
-app: FastAPI = FastAPI()
+from boiler_app import __version__
+
+# app
+app: FastAPI = FastAPI(
+    title="FastAPI", description="A simple FastAPI application", version=__version__
+)
 
 
 @app.get(path="/{number}", status_code=status.HTTP_200_OK)
 def get_pokemon(
     number: int = Path(title="The Pokémon to get (based on number)", ge=1, le=151)
 ) -> dict:
+    """
+    Endpoint that returns information about Pokémon.
+    Args:
+        number: The number of the Pokémon to get
+    Returns:
+        Awesome information about the Pokémon!
+    """
     pokemon_url: str = f"https://pokeapi.co/api/v2/pokemon/{number}"
 
     try:
@@ -27,4 +39,4 @@ def get_pokemon(
 
 
 if __name__ == "__main__":
-    uvicorn.run(app="app:app", host="127.0.0.1", port=9000, reload=True)
+    uvicorn.run(app="app:app", host="localhost", port=9000, reload=True)
